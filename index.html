@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="ner-editor">
+      <p class="text">  AVIF is notable because it very consistently outperforms JPEG in a very $significant way. This is different from WebP which doesn't always produce smaller images than JPEG and may actually be a net-loss due to lack of support for progressive loading .. </p>
+      <div class="buttons">
+        <button type="button" data-color="pink" data-class="image" class="btn btn1">Image format</button>
+        <button type="button" data-color="#afd2b0" data-class="video" class="btn btn2">Video format</button>
+        <button type="button" data-color="#d0c3dc" data-class="audio" class="btn btn3">Audio format</button>
+      </div>
+    <p class="error"></p>
+    <div class="selected-entities">
+      <table class="output-table">
+        <tr>
+          <th>Fragment</th>
+          <th>Label</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Length</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <!--
+  This script places a badge on your repl's full-browser view back to your repl's cover
+  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
+  teal, blue, blurple, magenta, pink!
+  -->
+  <script src="https://replit.com/public/js/replit-badge-v2.js" theme="dark" position="bottom-right"></script>
+</body>
+
+</html>

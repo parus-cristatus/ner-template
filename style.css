@@ -1,0 +1,108 @@
+html {
+  height: 100%;
+  width: 100%;
+  font-size: 1.2rem;
+
+  --border-radius: 4px;
+  --btn1-color: pink;
+  --btn2-color: #afd2b0;
+  --btn3-color: #d0c3dc;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+button {
+  position: relative;
+  padding: .5rem 1rem;
+  font-family: inherit;
+  margin: 0 .2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #e6e6e6;
+  font-size: .8rem;
+  cursor: pointer;
+}
+
+button::before {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  content: '';
+  width: 0px;
+  height: 0px;
+  border-top: 10px solid pink;
+  border-bottom: 10px solid pink;
+  border-left: 15px solid pink;
+}
+
+.pressed {
+  border: 2px solid violet;
+  transform: scale(.9);
+}
+
+.selected {
+  user-select: none;
+}
+
+.ner-editor {
+  border: 1px solid #e6e6e6;
+  border-radius: var(--border-radius);
+  padding: 12px;
+  max-inline-size: 45vw;
+}
+
+.btn:first-child {
+  margin-left: 0;
+}
+
+
+.btn2::before {
+  border-top: 10px solid var(--btn2-color);
+  border-bottom: 10px solid var(--btn2-color);
+  border-left: 15px solid var(--btn2-color);
+}
+
+.btn3::before {
+  border-top: 10px solid var(--btn3-color);
+  border-bottom: 10px solid var(--btn3-color);
+  border-left: 15px solid var(--btn3-color);
+}
+
+.error {
+  padding: .5rem;
+  border-radius: var(--border-radius);
+  background-color: #fcf1f1;
+  border: 1px solid #e78787;
+  font-size: .8rem;
+  width: fit-content;
+  display: none;
+}
+
+.selected-entities {
+  margin-block-start: 40px;
+  border: 1px solid #e6e6e6;
+  border-radius: var(--border-radius);
+  padding: 12px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  font-size: .8rem;
+}
