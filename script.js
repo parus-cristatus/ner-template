@@ -41,8 +41,7 @@ buttons.forEach(button => {
 });
 
 
-text.addEventListener('mouseup', () => {
-  selectionIsMade = true;     
+text.addEventListener('mouseup', labelSelected = () => {     
   const selection = window.getSelection().toString().trim();
       
   if (selection !== '' && buttonClicked) {
@@ -59,12 +58,18 @@ text.addEventListener('mouseup', () => {
     
     spans.forEach(span => {
       const spanIndex = parseInt(span.dataset.index);
+
       if (spanIndex >= indices.selectionStartIndex && spanIndex <= indices.selectionEndIndex && span.textContent.trim() !== '') {
+
+        span.classList.remove(...span.classList);
         handleSelectionBackground(span, selectionColor, 'add');
+        span.classList.add(`${label}`); 
+        
           } 
         });
 
         if (!output.some(sel => sel.start === indices.selectionStartIndex || sel.end === indices.selectionEndIndex)) {
+           
            output = setOutput(label, selection, indices.selectionStartIndex, indices.selectionEndIndex, selectionLength)
           renderOutput(output, outputTable);
         }
@@ -89,7 +94,8 @@ text.addEventListener('mouseup', () => {
 spans.forEach(span => {
   span.addEventListener('dblclick', () => {
     isDoubleClick = true;
-    let selectionIndex = removeSelection(span);
+    let currentLabel = span.classList[1];
+    let selectionIndex = removeSelection(span, currentLabel);
     output = output.filter(sel => sel.start !== selectionIndex);
     renderOutput(output, outputTable);
     console.log('After removal: ', output);
@@ -125,16 +131,16 @@ function calculateSelectionIndices() {
 
 //Calculate selection start token index to remove it
 
-function calculateSelectedStartIndex(token) {
+function calculateSelectedStartIndex(token, currentLabel) {
       let selectionIndex = 0;
   
-      if (token.previousElementSibling && token.previousElementSibling.classList.contains('whitespace')) {
+      if (token.previousElementSibling && ! token.classList.contains(currentLabel)) {
         selectionIndex = parseInt(token.dataset.index)
       } else if (!token.previousElementSibling) {
         selectionIndex = parseInt(token.dataset.index);
       } else {
         
-        while (token && token.classList.contains('selected') && !token.classList.contains('whitespace')) {
+        while (token && token.classList.contains('selected') && !token.classList.contains('whitespace') && token.classList.contains(currentLabel)) {
           token = token.previousElementSibling;
         }
 
@@ -145,30 +151,30 @@ function calculateSelectedStartIndex(token) {
 
         
       }
-
       return selectionIndex;
 }
 
 
-function removeSelection(span) {
-    let selectionIndex  = calculateSelectedStartIndex(span);
+function removeSelection(span, currentLabel) {
+    let selectionIndex  = calculateSelectedStartIndex(span, currentLabel);
+
     if (span.classList.contains('selected')) {
 
       handleSelectionBackground(span, '', 'remove');
       iterateThroughSpans(span, 'previous', (currentSpan) => {
   handleSelectionBackground(currentSpan, '', 'remove');
-});
+}, currentLabel);
       iterateThroughSpans(span, 'next', (currentSpan) => {
   handleSelectionBackground(currentSpan, '', 'remove');
-});
+}, currentLabel);
     }
     return selectionIndex; 
 }
 
 
-function iterateThroughSpans(startingSpan, direction, callback) {
+function iterateThroughSpans(startingSpan, direction, callback, currentLabel) {
   let currentSpan = startingSpan[direction + 'ElementSibling'];
-  while (currentSpan && !currentSpan.classList.contains('whitespace')) {
+  while (currentSpan && !currentSpan.classList.contains('whitespace') && currentSpan.classList.contains('selected') && currentSpan.classList.contains(currentLabel)) {
     callback(currentSpan);
     currentSpan = currentSpan[direction + 'ElementSibling'];
   }
@@ -206,7 +212,7 @@ function handleSelectionBackground(span, bg, action) {
 
 
 function renderOutput(output, outputContainer) {
-  outputContainer.innerHTML = '<tr><th>Fragment</th><th>Label</th><th>Start</th><th>End</th><th>Length</th></tr>';
+  outputContainer.innerHTML = '<tr><th>Label</th><th>Fragment</th><th>Start</th><th>End</th><th>Length</th></tr>';
   output.forEach(item => {
     const row = document.createElement('tr');
     const labelCell = document.createElement('td');
