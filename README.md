@@ -1,4 +1,8 @@
 # Named Entity Recognition template
 
-- select whole separate words 
-- remove selection on double click
+- Selection of whole entities or their parts with mouse
+- Whitespaces are trimmed.
+- Selection removal on double click
+
+# Used
+- Selection API
